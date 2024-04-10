@@ -6,8 +6,6 @@ using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
-     //private CharacterController characterController;
-    // private Vector3 direction;
     private float speed = 0.1f;
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravity;
@@ -20,12 +18,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPosition;
     void Start()
     {
-       // characterController = GetComponent<CharacterController>();
+       
     }
 
     private void Update()
     {
-        if (SwipeController.swipeRight || Input.GetKeyDown(KeyCode.D))
+        if (SwipeController.swipeRight || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
             if (lineToMove < 2 && canMove)
             {
                 lineToMove++;
@@ -34,7 +32,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(MoveRight());
             }
 
-        if (SwipeController.swipeLeft || Input.GetKeyDown(KeyCode.A))
+        if (SwipeController.swipeLeft || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
             if(lineToMove > 0 && canMove)
             {
                 lineToMove--;
@@ -47,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator MoveRight()
     {
+        
         Vector3 startPoss = transform.position;
         float t = 0f;
         canMove = false;
@@ -56,7 +55,6 @@ public class PlayerController : MonoBehaviour
             yield return transform.position = Vector3.Lerp(startPoss, targetPosition, t);
         }
         canMove = true;
-
     }
 
 
