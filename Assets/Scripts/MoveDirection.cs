@@ -2,41 +2,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MoveDirection : MonoBehaviour
+public  class MoveDirection : MonoBehaviour
 {
+
+    [SerializeField] private SceneController sceneController;
+
+
     protected Vector3 yTranslate = new Vector3(0, 0.001f, 0);
     protected Vector3 zTranslate = new Vector3(0, 0, -1f);
-    protected float speed;
-    private float speedMultiplier = 0.1f;
-
-
-    private void Awake()
+    protected static float speed =5;
+    private float speedMultiplier = 0.01f;
+    protected float maxZRange = 20f;
+    protected static float canGo = 1;
+    // Start is called before the first frame update
+    void Awake()
     {
+  
         StartCoroutine(UpdateSpeed());
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
+    private void Start()
+    {
+            canGo = 1;
+            speed = 5;
+    }
+    private void Update()
+    {
+        if (sceneController.gameOver == true)
+            canGo = 0;
+
+    }
     private IEnumerator UpdateSpeed()
     {
 
         //скорость можно сделать больше, 100 не так быстро но для тестов норм
         while (speed < 100)
         {
-            speed = 5;
             yield return speed += speed * Time.deltaTime * speedMultiplier;
+       
         }
 
     }
 
     protected void Move()
     {
-        transform.Translate(yTranslate * Time.deltaTime);
-        transform.Translate(zTranslate * Time.deltaTime * speed);
+
+            transform.Translate(yTranslate * Time.deltaTime * canGo);
+            transform.Translate(zTranslate * Time.deltaTime * speed *canGo);
+        
+
     }
 
 

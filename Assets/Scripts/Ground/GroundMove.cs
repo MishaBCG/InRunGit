@@ -31,9 +31,4 @@ public class GroundMove : MoveDirection
             transform.position = startPos;
     }
 
-    //private void Movement()
-    //{
-    //    transform.Translate(yTranslate * Time.deltaTime);
-    //    transform.Translate(zTranslate * Time.deltaTime * speed);
-    //}
 }

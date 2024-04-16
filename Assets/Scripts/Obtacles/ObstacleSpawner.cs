@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 public class ObstacleSpawner : MonoBehaviour
 {
+    [SerializeField] SceneController controller;
     [SerializeField] private List<Transform> obstaclesPrefab;
     private List<Vector3> spawnPos;
     private List<Transform> obstacles = new List<Transform>();
@@ -44,16 +45,20 @@ public class ObstacleSpawner : MonoBehaviour
 
     private void ActiveObstacle()
     {
-        int randomPos = Random.Range(0, spawnPos.Count);
-        foreach (Transform t in obstacles)
+        if(!controller.gameOver)
         {
-            if (!t.gameObject.activeInHierarchy)
+            int randomPos = Random.Range(0, spawnPos.Count);
+            foreach (Transform t in obstacles)
             {
-                t.gameObject.SetActive(true);
-                t.transform.position = spawnPos[randomPos];
-                break;
+                if (!t.gameObject.activeInHierarchy)
+                {
+                    t.gameObject.SetActive(true);
+                    t.transform.position = spawnPos[randomPos];
+                    break;
+                }
             }
         }
+
     }
 
 }

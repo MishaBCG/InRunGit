@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ObstaclesMovement : MoveDirection
 {
-    
-
 
 
     void Start()
@@ -17,16 +15,9 @@ public class ObstaclesMovement : MoveDirection
     void Update()
     {
         Move();
-        if(transform.position.z < -10)
+        if(transform.position.z < -maxZRange)
             gameObject.SetActive(false);
     }
 
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Obstacle"))
-            collision.gameObject.SetActive(false);
-
-    }
 
 }
