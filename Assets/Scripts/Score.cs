@@ -9,12 +9,24 @@ using static UnityEngine.Rendering.DebugUI;
 public class Score : MoveDirection
 {
     [SerializeField] SceneController controller;
-    private Timer distance;
     [SerializeField] TextMeshProUGUI textScore;
-    private float time;
+    private float distance;
+    private string playerName;
+    private float speedMultiplier;
+    private int scoreForSave;
+    private void Awake()
+    {
+ 
+
+    }
+
 
     private void Start()
     {
+        if (ForSaveInfo.instance.namePlayer != "")
+            playerName = ForSaveInfo.instance.namePlayer;
+        else
+            playerName = "";
 
     }
 
@@ -24,7 +36,9 @@ public class Score : MoveDirection
     {
         if (!controller.gameOver)
         {
-            float speedMultiplier = 0;
+            // not optimal
+            if (distance > 0)
+               scoreForSave = (int)Mathf.Ceil(distance);
 
             if (controller.powerUpPicker)
             {
@@ -37,8 +51,8 @@ public class Score : MoveDirection
                 speedMultiplier = speed;
 
 
-            time += Time.deltaTime * speedMultiplier;
-            textScore.text = time.ToString("0");
+            distance += Time.deltaTime * speedMultiplier;
+            textScore.text =  $"{playerName}: " + distance.ToString("0");
         }
 
     }
@@ -50,7 +64,24 @@ public class Score : MoveDirection
 
     }
 
+    private void OnEnable()
+    {
+        SceneController.gameIsOver += SaveBestScore;
+    }
 
+    private void OnDisable()
+    {
+        SceneController.gameIsOver -= SaveBestScore;
+    }
+
+    private void SaveBestScore()
+    {
+        if (ForSaveInfo.instance.ScoreToSave < scoreForSave)
+        {
+            ForSaveInfo.instance.ScoreToSave = scoreForSave;
+            Debug.Log("Best Score Save");
+        }
+    }
 
 
 

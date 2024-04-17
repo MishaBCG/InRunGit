@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour
 
     private bool canMove = true;
     private Vector3 targetPosition;
+
+
+
+
     void Start()
     {
 

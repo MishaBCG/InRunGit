@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -14,7 +15,7 @@ public class SceneController : MonoBehaviour
     private float numberOfCoins = 0;
     public bool gameOver { get; private set; }
     public bool powerUpPicker { get; private set; } = false;
-
+    public static event Action gameIsOver;
 
     private void Awake()
     {
@@ -41,25 +42,26 @@ public class SceneController : MonoBehaviour
     public void TurnOnPowerUp()
     {
         powerUpPicker=true;
-        Debug.Log("PowerUpWasPiCKED");
     }
     public void TurnOffPowerUp()
     {
         powerUpPicker = false;
-        Debug.Log("StopPowerUp");
     }
 
     public void GameOver()
     {
        // Time.timeScale = 0;
         gameOver = true;
-       
+        ForSaveInfo.instance.coins += (int)numberOfCoins;
+        gameIsOver?.Invoke();
+        ForSaveInfo.instance.SaveGame();
     }
 
     public void AddCoin()
     {
         numberOfCoins++;
         coins.text = $"Монет: {numberOfCoins}";
+
     }
 
     public void RestartPanel()
