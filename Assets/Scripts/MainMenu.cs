@@ -9,7 +9,8 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI coins;
-
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject shop;
 
     private void Awake()
     {
@@ -42,7 +43,11 @@ public class MainMenu : MonoBehaviour
 
     }
 
-
+    public void GetShopActive()
+    {
+        mainMenu.SetActive(!mainMenu.activeSelf);
+        shop.SetActive(!shop.activeSelf);
+    }
 
 
 

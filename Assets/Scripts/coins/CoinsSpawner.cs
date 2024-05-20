@@ -41,7 +41,7 @@ public class CoinsSpawner : MonoBehaviour
     {
         if(!controller.gameOver)
         {
-            float maxCoins = Random.RandomRange(3f, 10f);
+            float maxCoins = Random.Range(3f, 10f);
             var randomPos = Random.Range(0, spawnPos.Count);
             for (int i = 0; i < maxCoins; i++)
             {

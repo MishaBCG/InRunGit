@@ -16,7 +16,6 @@ public class Score : MoveDirection
     private int scoreForSave;
     private void Awake()
     {
- 
 
     }
 
